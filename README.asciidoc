@@ -1,0 +1,60 @@
+Download Apache Cassandra
+
+    wget -c http://www-us.apache.org/dist/cassandra/2.2.8/apache-cassandra-2.2.8-bin.tar.gz
+    tar zxf apache-cassandra-2.2.8-bin.tar.gz
+    cd apache-cassandra-2.2.8
+    bin/casandra
+
+Next up setup ElasticSearch
+
+    wget -c https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.3.tar.gz
+    tar zxf elasticsearch-1.7.3.tar.gz
+    cd elasticsearch-1.7.3
+    bin/elasticsearch
+
+Enter SBT console
+
+
+    sbt/sbt console
+    Welcome to Scala version 2.10.5 (OpenJDK 64-Bit Server VM, Java 1.8.0_102).
+    Type in expressions to have them evaluated.
+    Type :help for more information.
+    scala> println("Hello")
+
+Now inside Scala REPL (started above), we can import the required classes and populate a default graph
+
+
+    import com.thinkaurelius.titan.core._
+    import com.thinkaurelius.titan.example.GraphOfTheGodsFactory
+    import org.apache.commons.configuration.BaseConfiguration
+    import scala.collection.JavaConversions._
+    val cassConf = new BaseConfiguration()
+    cassConf.setProperty("index.search.backend", "elasticsearch")
+    cassConf.setProperty("index.search.client-only", "false")
+    cassConf.setProperty("index.search.local-mode", "true")
+    cassConf.setProperty("index.search.directory", "/tmp/searchindex")
+    cassConf.setProperty("storage.backend", "cassandra")
+    cassConf.setProperty("storage.hostname", "localhost")
+    cassConf.setProperty("storage.port", "9160")
+    cassConf.setProperty("storage.keyspace", "titan")
+    val titanGraph = TitanFactory.open(cassConf)
+    GraphOfTheGodsFactory.load(titanGraph)
+    val g = titanGraph.traversal()
+
+
+In the same Scala REPL, we can now explore the graph:
+
+    scala> g.V().toList.foreach(println)
+    v[8232]
+    v[16424]
+    v[8296]
+    v[4136]
+    v[12328]
+    v[4272]
+    v[24616]
+    v[4200]
+    v[20520]
+    v[4248]
+    v[4344]
+    v[4208]
+

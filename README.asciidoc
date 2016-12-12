@@ -3,6 +3,9 @@ Download Apache Cassandra
     wget -c http://www-us.apache.org/dist/cassandra/2.2.8/apache-cassandra-2.2.8-bin.tar.gz
     tar zxf apache-cassandra-2.2.8-bin.tar.gz
     cd apache-cassandra-2.2.8
+
+Set `start_rpc: true` in `conf/cassandra.yaml` and start Cassandra
+
     bin/casandra
 
 Next up setup ElasticSearch

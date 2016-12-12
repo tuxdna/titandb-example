@@ -58,3 +58,47 @@ In the same Scala REPL, we can now explore the graph:
     v[4344]
     v[4208]
 
+
+Use Marvel Example
+
+    scala> import in.tuxdna.example.titandb.MarvelGraphFactory
+    import in.tuxdna.example.titandb.MarvelGraphFactory
+    scala> val mgf = new MarvelGraphFactory()
+    mgf: in.tuxdna.example.titandb.MarvelGraphFactory = in.tuxdna.example.titandb.MarvelGraphFactory@3a0fdf95
+    scala> mgf.load(titanGraph, 100000, true)
+    14:46:37,248  INFO MarvelGraphFactory:127 - Character SPIDER-MAN has most appearances at 1625
+    14:47:49,393  INFO MarvelGraphFactory:153 - Awaiting:28801
+    12/12/16 2:47:49 PM ============================================================
+    -- Counters --------------------------------------------------------------------
+    MarvelGraphFactory.get_character
+                 count = 7588
+    MarvelGraphFactory.get_comic-book
+                 count = 12849
+    com.thinkaurelius.titan.sys.schema.query.graph.execute.calls
+                 count = 11
+    com.thinkaurelius.titan.sys.schema.query.graph.getNew.calls
+                 count = 11
+    com.thinkaurelius.titan.sys.schema.query.graph.hasDeletions.calls
+                 count = 11
+    com.thinkaurelius.titan.sys.schema.tx.begin
+                 count = 52
+    com.thinkaurelius.titan.sys.schema.tx.rollback
+                 count = 52
+    scala> g.V().has("comic-book", "AVF 4").in("appeared").values("character").order().foreach(println)
+    3-D MAN
+    ANT-MAN
+    CAPTAIN AMERICA
+    CHARLES CHAN
+    DR. HENRY J.
+    GORILLA-MAN
+    GUSTAV BRANDT
+    HAWK
+    HUMAN ROBOT
+    JANET VAN DYNE
+    JONES, RICHARD MILHO
+    LIBRA
+    MARVEL BOY III
+    ROBER
+    VENUS II
+    WASP
+
